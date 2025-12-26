@@ -71,6 +71,11 @@ def mostrar_tareas(lista):
         print(f'Importancia de la tarea:{tarea.importancia.name}')
 
 
+def obtener_tarea(lista, opcion):
+    indice=opcion-1
+    tarea_sel=lista[indice]
+    return tarea_sel
+
 ####parte de modicar tarea
 
 def modificar_tarea_ux(lista):
@@ -91,32 +96,28 @@ def verificar_indice(lista, opcion):
     else:
         return True
 
-def obtener_tarea(lista, x):
-    indice=x-1
-    tarea_sel=lista[indice]
-    return tarea_sel
 
-def mostrar_tarea_submenu(tarea_sel):
+def mostrar_tarea(tarea_sel):
     print(f'1. Titulo de la tarea:{tarea_sel.titulo}')
     print(f'2. Descripcion de la tarea: {tarea_sel.descripcion}')
     print(f' [Inmodificable] Fecha de creacion de la tarea: {tarea_sel.fecha_creacion}')
     print(f'3. Fecha de entrega: {tarea_sel.fecha_entrega}')
     print(f'4. Estado de la tarea:{tarea_sel.estado.name}')
     print(f'5. Importancia de la tarea:{tarea_sel.importancia.name}')
+
+
+def pedir_opcion_submenu(tipo_tarea):
     print('6. salir del menu')
-
-
-def pedir_opcion_submenu():
     while True:
         try:
-            opcion_modificada=int(input('ingrese la opcion a modificar, debe ser un NUMERO:'))
+            opcion_modificada=int(input(f'ingrese la opcion a {tipo_tarea}, debe ser un NUMERO:'))
             return opcion_modificada
         except ValueError:
             print('tipo de dato invalido, ingrese un NUMERO')
             continue
 
 def verificar_opcion_submenu(opcion):
-    if opcion<=-1 or opcion>=7:
+    if not 1<= opcion <=6 :
         print('opcion invalida, selecion uno valido')
         return False
     else:
@@ -184,3 +185,29 @@ def pregunta_continuacion():
 
 ###borrar
 
+def borrar_seleccion(lista):
+    while True:
+        try:
+            opcion=int(input('selecione la tarea a eliminar:'))-1 ###usuario=1 sistema=0
+            if opcion >= len(lista) or opcion <=-1:
+                print('numero de usuario inexistente, intentelo nuevamente')
+                continue
+            return opcion
+        except ValueError:
+            print('tipo de dato erroneo, ingrese uno correcto')
+            continue
+
+def confirmacion_borrar():
+    while True:
+        try:
+            confirmacion=input('esta seguro de eliminar la tarea (s/n)').upper()
+            if confirmacion=='S':
+                return True
+            input('cancelado con exito, ingrese enter para continuar')
+            return False
+        except ValueError:
+            print('INGRESE UNA LETRA')
+
+
+def borrar_tarea(lista, tarea):
+    lista.pop(tarea)

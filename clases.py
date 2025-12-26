@@ -8,11 +8,6 @@ class EstadoTarea(Enum):
     EN_PROGRESO = 2
     COMPLETADA = 3
 
-mapa_estados={
-    1: EstadoTarea.PENDIENTE,
-    2: EstadoTarea.EN_PROGRESO,
-    3: EstadoTarea.COMPLETADA
-}
 
 
 
@@ -22,13 +17,6 @@ class ImportanciaTarea(Enum):
     ALTA=3
 
 
-Mapa_importancia={
-    1: ImportanciaTarea.BAJA,
-    2: ImportanciaTarea.MEDIA,
-    3: ImportanciaTarea.ALTA
-}
-
-
 
 @dataclass
 class Tarea:
@@ -36,5 +24,5 @@ class Tarea:
     descripcion:str
     fecha_creacion: datetime.datetime
     fecha_entrega : datetime.datetime
-    estado : int ### manejo de diccionario
-    importancia : int ### diccionario 
+    estado : EstadoTarea ### manejo de diccionario
+    importancia :ImportanciaTarea ### diccionario 

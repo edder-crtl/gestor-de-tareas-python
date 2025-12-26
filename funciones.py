@@ -1,7 +1,7 @@
 import datetime
 
 def confirmacion():
-    input('ingrese enter para continuar')
+    input(' \n ingrese enter para continuar')
     pass
 
 def pedir_fecha():
@@ -23,4 +23,3 @@ def validacion_campo(texto, campo):
         print(F'{campo} no puede estar vacio, intentelo nuevamente')
         return False
     return True
-

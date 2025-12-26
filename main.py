@@ -1,6 +1,6 @@
 from funciones import confirmacion
 from guardado_datos import cargar_tareas, guardar_tareas
-from crud import crear_tarea, mostrar_tareas,modificar_tarea_ux, verificar_indice, obtener_tarea, mostrar_tarea_submenu,verificar_opcion_submenu, pedir_opcion_submenu, sel_modificacion, modificar_tarea_sel, pregunta_continuacion
+from crud import crear_tarea, mostrar_tareas,modificar_tarea_ux, verificar_indice, obtener_tarea, mostrar_tarea,verificar_opcion_submenu, pedir_opcion_submenu, sel_modificacion, modificar_tarea_sel, pregunta_continuacion,borrar_seleccion,borrar_tarea, confirmacion_borrar
 
 
 
@@ -39,19 +39,20 @@ def main():
             continue
 
         elif opcion==3:
+            tipo_tarea='modificar'
             while True:
                 mostrar_tareas(Tareas)
                 opcion_tarea=modificar_tarea_ux(Tareas)
                 if opcion_tarea==0:
                     break
                 es_valido=verificar_indice(Tareas, opcion_tarea) ### Validamos la opcion
-                if es_valido==True: ### Si es valido, encontrara la tarea y dentrara al bucle del submenu, si no regrasa al inicio
+                if es_valido: ### Si es valido, encontrara la tarea y dentrara al bucle del submenu, si no regrasa al inicio
                     tarea_a_modificar=obtener_tarea(Tareas, opcion_tarea)
                     while True:
-                        mostrar_tarea_submenu(tarea_a_modificar)
-                        opcion_submenu=pedir_opcion_submenu()
+                        mostrar_tarea(tarea_a_modificar)
+                        opcion_submenu=pedir_opcion_submenu(tipo_tarea)
                         es_valido_submenu=verificar_opcion_submenu(opcion_submenu) ###Verificamos opcion de submenu
-                        if es_valido_submenu==True:
+                        if es_valido_submenu:
                             modificacion=sel_modificacion(opcion_submenu)
                             modificar_tarea_sel(tarea_a_modificar, modificacion, opcion_submenu)
                             guardar_tareas(Tareas) ###guardamos cambios antes de seguir
@@ -60,16 +61,26 @@ def main():
                             break
                         continue###en caso de false, se reinicial el while submenu
                 else:
-                    print('ERROR, usuario inexistente')
+                    print('ERROR, tarea inexistente')
                     continue
 
 
 
 
         elif opcion==4:
-            
-            confirmacion()
-            continue
+            while True:
+                mostrar_tareas(Tareas)
+                opcion=borrar_seleccion(Tareas)
+                tarea_a_borrar=obtener_tarea(Tareas, opcion)
+                mostrar_tarea(tarea_a_borrar)
+                if confirmacion_borrar():
+                    borrar_tarea(Tareas, opcion)
+                    print('eliminado con exito, feliz dia')
+                    confirmacion()
+                    guardar_tareas(Tareas)
+                    break
+                break
+
 
         else:
             print('opcion invalida, por favor ingrese una opcion valida')
