@@ -1,6 +1,3 @@
-# gestor-de-tareas-python
-
-
 
 # Gestor de tareas en Python
 
